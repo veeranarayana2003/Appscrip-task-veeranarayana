@@ -1,13 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductGrid from "./ProductGrid";
 import Filters from "./Filters";
 
-
-export default function ClientHome({ products }) {
-  const [sortedProducts, setSortedProducts] = useState(products);
+export default function ClientHome() {
+  const [products, setProducts] = useState([]);
+  const [sortedProducts, setSortedProducts] = useState([]);
   const [showFilters, setShowFilters] = useState(true);
+
+  useEffect(() => {
+    fetch("https://fakestoreapi.com/products")
+      .then((res) => res.json())
+      .then((data) => {
+        setProducts(data);
+        setSortedProducts(data);
+      });
+  }, []);
 
   const handleSort = (type) => {
     let sorted = [...products];
@@ -49,7 +58,6 @@ export default function ClientHome({ products }) {
         </select>
       </div>
 
-      {/* MAIN */}
       <div className="main">
         {showFilters && <Filters />}
         <ProductGrid products={sortedProducts} />

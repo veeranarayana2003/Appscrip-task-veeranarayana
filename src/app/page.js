@@ -7,17 +7,11 @@ export const metadata = {
   description: "Browse products with filters and sorting",
 };
 
-export default async function Home() {
-  const res = await fetch("https://fakestoreapi.com/products", {
-    cache: "no-store",
-  });
-
-  const products = await res.json();
-
+export default function Home() {
   return (
     <>
       <Header />
-      <ClientHome products={products} />
+      <ClientHome />
       <Footer />
     </>
   );
